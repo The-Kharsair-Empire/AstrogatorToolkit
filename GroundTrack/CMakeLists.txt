@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(TrackingStationToolkit)
+project(GroundTrack)
 
 find_package(X11 REQUIRED)
 

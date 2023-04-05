@@ -8,6 +8,7 @@ cmake-build-release/
 
 ### vscode ###
 .vscode/
+*.code-workspace
 
 ### CMake ###
 CMakeLists.txt.user

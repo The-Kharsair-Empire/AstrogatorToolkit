@@ -20,9 +20,17 @@ namespace kharsair::astk {
 
         OrbitPropagator(const OrbitPropagator& propagator) = delete;
 
-        void propagator_orbit();
+        void propagate_all();
+        void propagate_one_step();
+        void set_stop_condition();
+        bool check_stop_condition();
         void set_perturbation();
         void set_config();
+    
+    public:
+        const std::vector<std::vector<double>>& get_states() const;
+        const std::vector<double>& get_timestamps() const;
+        const std::vector<double>& get_most_recent_state() const;
         
     protected:
         void acceleration_ode(
@@ -32,11 +40,10 @@ namespace kharsair::astk {
 
         void rk4_step();
 
-    public:
+    private:
         std::vector<std::vector<double>> states;
         std::vector<double> times;
 
-    private:
         uint32_t state_vector_size;
         double central_body_mu;
         double timespan;

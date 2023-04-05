@@ -23,7 +23,6 @@ void OrbitPropagator::acceleration_ode(
 	state_vecotr_dot[3] = -central_body_mu * state_vector[0] / denominator;
 	state_vecotr_dot[4] = -central_body_mu * state_vector[1] / denominator;
 	state_vecotr_dot[5] = -central_body_mu * state_vector[2] / denominator;
-
 }
 
 OrbitPropagator::OrbitPropagator(
@@ -44,8 +43,6 @@ OrbitPropagator::OrbitPropagator(
         k2.resize(state_vector_size);
         k3.resize(state_vector_size);
         k4.resize(state_vector_size);
-
-        // n_step = timespan / timestep; 
 
         states.resize(n_step, std::vector<double>(state_vector_size, -1.));
         states[0] = initial_state;
@@ -85,6 +82,23 @@ void OrbitPropagator::rk4_step() {
     current_step++;
 }
 
-void OrbitPropagator::propagator_orbit() {
+void OrbitPropagator::propagate_all() {
     while (current_step < n_step) rk4_step();
 }
+
+void OrbitPropagator::propagate_one_step() {
+    rk4_step();
+}
+
+
+const std::vector<std::vector<double>>& OrbitPropagator::get_states() const{
+    return this->states;
+}
+const std::vector<double>& OrbitPropagator::get_timestamps() const{
+    return this->times;
+}
+const std::vector<double>& OrbitPropagator::get_most_recent_state() const{
+    return states.at(current_step-1);
+}
+
+// bool OrbitPropagator::check_stop_condition(){}
